@@ -1,0 +1,274 @@
+:root {
+  font-family: "Futura", "Gill Sans", "Trebuchet MS", sans-serif;
+  color: #12232a;
+  background-color: #f4f1ea;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, #f8dfc6 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, #c9e6f4 0%, transparent 45%), linear-gradient(120deg, #f7f2ed 0%, #f0f8fb 100%);
+}
+
+#app {
+  min-height: 100vh;
+  padding: 32px 20px 60px;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  align-items: center;
+}
+
+.hero-text h1 {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  margin: 0 0 12px;
+  letter-spacing: 0.04em;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.7rem;
+  color: #4e6d7b;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #355461;
+  margin: 0;
+}
+
+.hero-panel {
+  background: #111c2e;
+  color: #f7f1e8;
+  padding: 24px;
+  border-radius: 22px;
+  box-shadow: 0 18px 35px rgba(16, 30, 39, 0.24);
+}
+
+.hero-panel h2 {
+  margin: 8px 0 6px;
+  font-size: 1.5rem;
+}
+
+.panel-label {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.65rem;
+  margin: 0;
+  color: #c8d5db;
+}
+
+.pill-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  background: rgba(247, 241, 232, 0.2);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+
+.panel {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 16px 30px rgba(18, 35, 42, 0.08);
+  animation: rise 0.5s ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.badge {
+  background: #f6e7cc;
+  color: #7a4c1b;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+
+.search-form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #3b5661;
+}
+
+.field input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #d3dee2;
+  background: #f8fbfc;
+  font-size: 0.95rem;
+}
+
+.coords {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.divider {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  color: #8aa2ad;
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary {
+  background: #0f2e38;
+  color: #f8f2ea;
+}
+
+.ghost {
+  background: #eef3f5;
+  color: #2b4048;
+}
+
+.notice {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.notice.error {
+  background: #ffe6e1;
+  color: #8b2d1f;
+}
+
+.notice.success {
+  background: #e2f3e8;
+  color: #20593a;
+}
+
+.results-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.card {
+  background: #f7f6f0;
+  border-radius: 18px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.meta {
+  margin: 0;
+  color: #5d757f;
+  font-size: 0.85rem;
+}
+
+.forecast-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.forecast-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e7ea;
+}
+
+.forecast-row .date {
+  font-weight: 600;
+}
+
+.favorites-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.empty {
+  color: #7f95a0;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 720px) {
+  .hero-panel {
+    order: -1;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+}

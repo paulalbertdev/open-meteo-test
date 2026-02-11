@@ -1,0 +1,3 @@
+{
+    "phpstan.projectFile": "backend/phpstan.neon"
+}
