@@ -38,3 +38,34 @@ body {
   letter-spacing: 0.2em;
   font-size: 0.7rem;
 }
+
+.star-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.star-icon {
+  width: 0.95em;
+  height: 0.95em;
+  fill: #f3c319;
+  flex-shrink: 0;
+}
+
+.button-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.button-icon {
+  width: 0.95em;
+  height: 0.95em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.form-control::placeholder {
+  color: #bbb;
+  opacity: 1;
+}

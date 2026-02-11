@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import FavoritesPanel from './components/FavoritesPanel.vue'
+import SearchPanel from './components/SearchPanel.vue'
 import {
   deleteFavorite,
   fetchWeatherByCity,
@@ -147,8 +149,8 @@ onMounted(() => {
   <div class="container py-4 py-lg-5 d-flex flex-column gap-4">
     <header class="row g-4 align-items-center">
       <div class="col-12 col-lg-6">
-        <p class="eyebrow text-muted mb-2">Open-Meteo Gateway</p>
-        <h1 class="display-5 fw-semibold mb-3">Weather Atlas</h1>
+        <p class="eyebrow text-muted mb-2">Personal Weather Board</p>
+        <h1 class="display-5 fw-semibold mb-3">Four Fata Weather</h1>
         <p class="lead text-secondary mb-0">
           Browse city forecasts or drop coordinates, then pin favorites for quick access.
         </p>
@@ -165,36 +167,8 @@ onMounted(() => {
       </div>
     </header>
 
-    <section class="card border-0 shadow-sm">
-      <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
-          <h2 class="h4 mb-0">Search</h2>
-          <span class="badge text-bg-warning" v-if="isLoading">Loading</span>
-        </div>
-        <form class="row g-3" @submit.prevent="handleSearch">
-          <div class="col-12">
-            <label class="form-label">City</label>
-            <input class="form-control" v-model="city" placeholder="Paris, Lyon, Marseille" />
-          </div>
-          <div class="col-12">
-            <span class="divider text-uppercase text-secondary">or</span>
-          </div>
-          <div class="col-12 col-md-6">
-            <label class="form-label">Latitude</label>
-            <input class="form-control" v-model="latitude" placeholder="48.856" />
-          </div>
-          <div class="col-12 col-md-6">
-            <label class="form-label">Longitude</label>
-            <input class="form-control" v-model="longitude" placeholder="2.352" />
-          </div>
-          <div class="col-12">
-            <button class="btn btn-primary" type="submit">Search</button>
-          </div>
-        </form>
-        <div class="alert alert-danger mt-3 mb-0" v-if="errorMessage">{{ errorMessage }}</div>
-        <div class="alert alert-success mt-3 mb-0" v-if="statusMessage">{{ statusMessage }}</div>
-      </div>
-    </section>
+    <SearchPanel v-model:city="city" v-model:latitude="latitude" v-model:longitude="longitude" :is-loading="isLoading"
+      :error-message="errorMessage" :status-message="statusMessage" @submit="handleSearch" />
 
     <section class="card border-0 shadow-sm">
       <div class="card-body">
@@ -212,7 +186,13 @@ onMounted(() => {
                 <p class="text-secondary small mb-0">Timezone {{ weather.timezone ?? '-' }}</p>
                 <div class="mt-2">
                   <button class="btn btn-outline-secondary" type="button" @click="saveCurrent">
-                    Save favorite
+                    <span class="star-label">
+                      <svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path
+                          d="M12 3.5l2.96 6.01 6.64.96-4.8 4.68 1.13 6.61L12 18.9l-5.93 3.12 1.13-6.61-4.8-4.68 6.64-.96L12 3.5z" />
+                      </svg>
+                      Save favorite
+                    </span>
                   </button>
                 </div>
               </div>
@@ -238,33 +218,7 @@ onMounted(() => {
       </div>
     </section>
 
-    <section class="card border-0 shadow-sm">
-      <div class="card-body">
-        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
-          <h2 class="h4 mb-0">Favorites</h2>
-          <span class="badge text-bg-secondary" v-if="favorites.length">{{ favorites.length }}</span>
-        </div>
-        <div class="row g-3" v-if="favorites.length">
-          <div class="col-12 col-md-6 col-lg-4" v-for="favorite in favorites" :key="favorite.id">
-            <article class="card h-100 border-0 shadow-sm">
-              <div class="card-body d-flex flex-column gap-2">
-                <h3 class="h5 mb-0">{{ favorite.label }}</h3>
-                <p class="text-secondary small mb-0">{{ formatCoords(favorite.latitude, favorite.longitude) }}</p>
-                <p class="text-secondary small mb-0">Saved {{ formatDate(favorite.createdAt) }}</p>
-                <div class="d-flex flex-wrap gap-2 mt-2">
-                  <button class="btn btn-primary btn-sm" type="button" @click="loadFavorite(favorite)">
-                    Load
-                  </button>
-                  <button class="btn btn-outline-secondary btn-sm" type="button" @click="removeFavorite(favorite.id)">
-                    Remove
-                  </button>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-        <p v-else class="text-secondary mb-0">No favorites yet. Save one from a search.</p>
-      </div>
-    </section>
+    <FavoritesPanel :favorites="favorites" :format-coords="formatCoords" :format-date="formatDate"
+      @load-favorite="loadFavorite" @remove-favorite="removeFavorite" />
   </div>
 </template>
