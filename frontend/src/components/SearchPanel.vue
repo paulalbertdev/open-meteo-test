@@ -50,7 +50,7 @@ const handleSubmit = () => {
                     <input class="form-control" v-model="cityValue" placeholder="Paris, Lyon, Marseille" />
                 </div>
                 <div class="col-12">
-                    <span class="divider text-uppercase text-secondary">or</span>
+                    <span class="divider text-uppercase">or</span>
                 </div>
                 <div class="col-12 col-md-6">
                     <label class="form-label">Latitude</label>

@@ -151,7 +151,7 @@ onMounted(() => {
       <div class="col-12 col-lg-6">
         <p class="eyebrow text-muted mb-2">Personal Weather Board</p>
         <h1 class="display-5 fw-semibold mb-3">Four Fata Weather</h1>
-        <p class="lead text-secondary mb-0">
+        <p class="lead mb-0">
           Browse city forecasts or drop coordinates, then pin favorites for quick access.
         </p>
       </div>
@@ -174,7 +174,7 @@ onMounted(() => {
       <div class="card-body">
         <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
           <h2 class="h4 mb-0">Conditions</h2>
-          <p class="text-secondary small mb-0" v-if="weather">{{ formattedLocation }}</p>
+          <p class="small mb-0" v-if="weather">{{ formattedLocation }}</p>
         </div>
         <div v-if="weather" class="row g-3">
           <div class="col-12 col-lg-5">
@@ -182,8 +182,8 @@ onMounted(() => {
               <div class="card-body d-flex flex-column gap-2">
                 <h3 class="h5 mb-0">Now</h3>
                 <p class="display-6 fw-semibold mb-0">{{ weather.current?.temperature_2m ?? '-' }} C</p>
-                <p class="text-secondary small mb-0">Wind {{ weather.current?.wind_speed_10m ?? '-' }} km/h</p>
-                <p class="text-secondary small mb-0">Timezone {{ weather.timezone ?? '-' }}</p>
+                <p class="small mb-0">Wind {{ weather.current?.wind_speed_10m ?? '-' }} km/h</p>
+                <p class="small mb-0">Timezone {{ weather.timezone ?? '-' }}</p>
                 <div class="mt-2">
                   <button class="btn btn-outline-secondary" type="button" @click="saveCurrent">
                     <span class="star-label">
@@ -206,15 +206,15 @@ onMounted(() => {
                   <div v-for="row in dailyRows" :key="row.date" class="list-group-item px-0">
                     <div class="fw-semibold">{{ row.date }}</div>
                     <div>{{ row.max ?? '-' }} C / {{ row.min ?? '-' }} C</div>
-                    <div class="text-secondary small">Wind {{ row.wind ?? '-' }} km/h</div>
+                    <div class="small">Wind {{ row.wind ?? '-' }} km/h</div>
                   </div>
                 </div>
-                <p v-else class="text-secondary mb-0">No forecast yet.</p>
+                <p v-else class="mb-0">No forecast yet.</p>
               </div>
             </article>
           </div>
         </div>
-        <p v-else class="text-secondary mb-0">Start with a search to see conditions.</p>
+        <p v-else class="mb-0">Start with a search to see conditions.</p>
       </div>
     </section>
 

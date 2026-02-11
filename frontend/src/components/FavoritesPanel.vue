@@ -41,9 +41,9 @@ const handleRemove = (id: number) => {
                     <article class="card h-100 border-0 shadow-sm">
                         <div class="card-body d-flex flex-column gap-2">
                             <h3 class="h5 mb-0">{{ favorite.label }}</h3>
-                            <p class="text-secondary small mb-0">{{ formatCoords(favorite.latitude, favorite.longitude)
+                            <p class="small mb-0">{{ formatCoords(favorite.latitude, favorite.longitude)
                                 }}</p>
-                            <p class="text-secondary small mb-0">Saved {{ formatDate(favorite.createdAt) }}</p>
+                            <p class="small mb-0">Saved {{ formatDate(favorite.createdAt) }}</p>
                             <div class="d-flex flex-wrap gap-2 mt-2">
                                 <button class="btn btn-primary btn-sm" type="button" @click="handleLoad(favorite)">
                                     <span class="button-label">
@@ -71,7 +71,7 @@ const handleRemove = (id: number) => {
                     </article>
                 </div>
             </div>
-            <p v-else class="text-secondary mb-0">No favorites yet. Save one from a search.</p>
+            <p v-else class="mb-0">No favorites yet. Save one from a search.</p>
         </div>
     </section>
 </template>
