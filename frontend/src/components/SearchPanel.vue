@@ -40,6 +40,10 @@ const clearCoordinates = () => {
     longitudeValue.value = ''
     latitudeValue.value = ''
 }
+
+const clearCity = () => {
+    cityValue.value = ''
+}
 </script>
 
 <template>
@@ -60,11 +64,11 @@ const clearCoordinates = () => {
                 </div>
                 <div class="col-12 col-md-6">
                     <label class="form-label">Latitude</label>
-                    <input class="form-control" v-model="latitudeValue" placeholder="48.856" />
+                    <input class="form-control" @change="clearCity" v-model="latitudeValue" placeholder="48.856" />
                 </div>
                 <div class="col-12 col-md-6">
                     <label class="form-label">Longitude</label>
-                    <input class="form-control" v-model="longitudeValue" placeholder="2.352" />
+                    <input class="form-control" @change="clearCity" v-model="longitudeValue" placeholder="2.352" />
                 </div>
                 <div class="col-12">
                     <button class="btn btn-primary" type="submit">

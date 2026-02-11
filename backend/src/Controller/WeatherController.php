@@ -34,11 +34,6 @@ final class WeatherController extends AbstractController
             if ($latitude === null || $longitude === null) {
                 return $this->json(['error' => 'Provide a city or valid coordinates.'], JsonResponse::HTTP_BAD_REQUEST);
             }
-
-            if (!$this->isValidLatitude($latitude) || !$this->isValidLongitude($longitude)) {
-                return $this->json(['error' => 'Coordinates out of range.'], JsonResponse::HTTP_BAD_REQUEST);
-            }
-
             $label = sprintf('%.4f, %.4f', $latitude, $longitude);
         }
 
@@ -80,10 +75,6 @@ final class WeatherController extends AbstractController
 
         if ($label === '' || $latitude === null || $longitude === null) {
             return $this->json(['error' => 'Label, latitude, and longitude are required.'], JsonResponse::HTTP_BAD_REQUEST);
-        }
-
-        if (!$this->isValidLatitude($latitude) || !$this->isValidLongitude($longitude)) {
-            return $this->json(['error' => 'Coordinates out of range.'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
         $favorite = new FavoriteSearch($label, $latitude, $longitude);
@@ -133,16 +124,6 @@ final class WeatherController extends AbstractController
         }
 
         return (float) $result;
-    }
-
-    private function isValidLatitude(float $latitude): bool
-    {
-        return $latitude >= -90.0 && $latitude <= 90.0;
-    }
-
-    private function isValidLongitude(float $longitude): bool
-    {
-        return $longitude >= -180.0 && $longitude <= 180.0;
     }
 
     /**

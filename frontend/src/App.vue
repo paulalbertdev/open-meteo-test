@@ -120,6 +120,7 @@ const loadFavorite = async (favorite: Favorite) => {
   latitude.value = favorite.latitude.toString()
   longitude.value = favorite.longitude.toString()
   await handleSearch()
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 const parseNumber = (value: string): number | null => {
@@ -155,7 +156,7 @@ onMounted(() => {
         <p class="eyebrow text-muted mb-2">Personal Weather Board</p>
         <h1 class="display-5 fw-semibold mb-3">Four Fata Weather</h1>
         <p class="lead mb-0">
-          Browse city forecasts or drop coordinates, then pin favorites for quick access.
+          Get city forecasts by name, or drop coordinates
         </p>
       </div>
       <div class="col-12 col-lg-6">
