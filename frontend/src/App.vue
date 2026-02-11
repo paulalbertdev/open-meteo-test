@@ -144,97 +144,127 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="page">
-    <header class="hero">
-      <div class="hero-text">
-        <p class="eyebrow">Open-Meteo Gateway</p>
-        <h1>Weather Atlas</h1>
-        <p class="subtitle">
+  <div class="container py-4 py-lg-5 d-flex flex-column gap-4">
+    <header class="row g-4 align-items-center">
+      <div class="col-12 col-lg-6">
+        <p class="eyebrow text-muted mb-2">Open-Meteo Gateway</p>
+        <h1 class="display-5 fw-semibold mb-3">Weather Atlas</h1>
+        <p class="lead text-secondary mb-0">
           Browse city forecasts or drop coordinates, then pin favorites for quick access.
         </p>
       </div>
-      <div class="hero-panel">
-        <p class="panel-label">Current focus</p>
-        <h2>{{ weather?.location?.label ?? 'No search yet' }}</h2>
-        <p class="meta" v-if="weather?.current">
-          {{ weather.current.temperature_2m ?? '-' }} C · {{ weather.current.wind_speed_10m ?? '-' }} km/h
-        </p>
-        <p class="meta" v-else>Search to see live conditions.</p>
+      <div class="col-12 col-lg-6">
+        <div class="hero-panel rounded-4 p-4 shadow">
+          <p class="panel-label text-uppercase mb-2">Current focus</p>
+          <h2 class="h3 mb-2">{{ weather?.location?.label ?? 'No search yet' }}</h2>
+          <p class="text-light-emphasis mb-0" v-if="weather?.current">
+            {{ weather.current.temperature_2m ?? '-' }} C · {{ weather.current.wind_speed_10m ?? '-' }} km/h
+          </p>
+          <p class="text-light-emphasis mb-0" v-else>Search to see live conditions.</p>
+        </div>
       </div>
     </header>
 
-    <section class="panel search-panel">
-      <div class="panel-header">
-        <h2>Search</h2>
-        <span class="badge" v-if="isLoading">Loading</span>
-      </div>
-      <form class="search-form" @submit.prevent="handleSearch">
-        <label class="field">
-          <span>City</span>
-          <input v-model="city" placeholder="Paris, Lyon, Marseille" />
-        </label>
-        <div class="divider">or</div>
-        <div class="coords">
-          <label class="field">
-            <span>Latitude</span>
-            <input v-model="latitude" placeholder="48.856" />
-          </label>
-          <label class="field">
-            <span>Longitude</span>
-            <input v-model="longitude" placeholder="2.352" />
-          </label>
+    <section class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+          <h2 class="h4 mb-0">Search</h2>
+          <span class="badge text-bg-warning" v-if="isLoading">Loading</span>
         </div>
-        <button class="primary" type="submit">Search</button>
-      </form>
-      <div class="notice error" v-if="errorMessage">{{ errorMessage }}</div>
-      <div class="notice success" v-if="statusMessage">{{ statusMessage }}</div>
+        <form class="row g-3" @submit.prevent="handleSearch">
+          <div class="col-12">
+            <label class="form-label">City</label>
+            <input class="form-control" v-model="city" placeholder="Paris, Lyon, Marseille" />
+          </div>
+          <div class="col-12">
+            <span class="divider text-uppercase text-secondary">or</span>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label">Latitude</label>
+            <input class="form-control" v-model="latitude" placeholder="48.856" />
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="form-label">Longitude</label>
+            <input class="form-control" v-model="longitude" placeholder="2.352" />
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit">Search</button>
+          </div>
+        </form>
+        <div class="alert alert-danger mt-3 mb-0" v-if="errorMessage">{{ errorMessage }}</div>
+        <div class="alert alert-success mt-3 mb-0" v-if="statusMessage">{{ statusMessage }}</div>
+      </div>
     </section>
 
-    <section class="panel results-panel">
-      <div class="panel-header">
-        <h2>Conditions</h2>
-        <p class="meta" v-if="weather">{{ formattedLocation }}</p>
-      </div>
-      <div v-if="weather" class="results-grid">
-        <article class="card current-card">
-          <h3>Now</h3>
-          <p class="value">{{ weather.current?.temperature_2m ?? '-' }} C</p>
-          <p class="meta">Wind {{ weather.current?.wind_speed_10m ?? '-' }} km/h</p>
-          <p class="meta">Timezone {{ weather.timezone ?? '-' }}</p>
-          <button class="ghost" type="button" @click="saveCurrent">Save favorite</button>
-        </article>
-        <article class="card forecast-card">
-          <h3>Next days</h3>
-          <div class="forecast-grid" v-if="dailyRows.length">
-            <div v-for="row in dailyRows" :key="row.date" class="forecast-row">
-              <span class="date">{{ row.date }}</span>
-              <span>{{ row.max ?? '-' }} C / {{ row.min ?? '-' }} C</span>
-              <span class="meta">Wind {{ row.wind ?? '-' }} km/h</span>
-            </div>
+    <section class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <h2 class="h4 mb-0">Conditions</h2>
+          <p class="text-secondary small mb-0" v-if="weather">{{ formattedLocation }}</p>
+        </div>
+        <div v-if="weather" class="row g-3">
+          <div class="col-12 col-lg-5">
+            <article class="card border-0 shadow-sm h-100">
+              <div class="card-body d-flex flex-column gap-2">
+                <h3 class="h5 mb-0">Now</h3>
+                <p class="display-6 fw-semibold mb-0">{{ weather.current?.temperature_2m ?? '-' }} C</p>
+                <p class="text-secondary small mb-0">Wind {{ weather.current?.wind_speed_10m ?? '-' }} km/h</p>
+                <p class="text-secondary small mb-0">Timezone {{ weather.timezone ?? '-' }}</p>
+                <div class="mt-2">
+                  <button class="btn btn-outline-secondary" type="button" @click="saveCurrent">
+                    Save favorite
+                  </button>
+                </div>
+              </div>
+            </article>
           </div>
-          <p v-else class="empty">No forecast yet.</p>
-        </article>
+          <div class="col-12 col-lg-7">
+            <article class="card border-0 shadow-sm h-100">
+              <div class="card-body">
+                <h3 class="h5">Next days</h3>
+                <div class="list-group list-group-flush" v-if="dailyRows.length">
+                  <div v-for="row in dailyRows" :key="row.date" class="list-group-item px-0">
+                    <div class="fw-semibold">{{ row.date }}</div>
+                    <div>{{ row.max ?? '-' }} C / {{ row.min ?? '-' }} C</div>
+                    <div class="text-secondary small">Wind {{ row.wind ?? '-' }} km/h</div>
+                  </div>
+                </div>
+                <p v-else class="text-secondary mb-0">No forecast yet.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <p v-else class="text-secondary mb-0">Start with a search to see conditions.</p>
       </div>
-      <p v-else class="empty">Start with a search to see conditions.</p>
     </section>
 
-    <section class="panel favorites-panel">
-      <div class="panel-header">
-        <h2>Favorites</h2>
-        <span class="badge" v-if="favorites.length">{{ favorites.length }}</span>
-      </div>
-      <div class="favorites-grid" v-if="favorites.length">
-        <article v-for="favorite in favorites" :key="favorite.id" class="card favorite-card">
-          <h3>{{ favorite.label }}</h3>
-          <p class="meta">{{ formatCoords(favorite.latitude, favorite.longitude) }}</p>
-          <p class="meta">Saved {{ formatDate(favorite.createdAt) }}</p>
-          <div class="actions">
-            <button class="primary" type="button" @click="loadFavorite(favorite)">Load</button>
-            <button class="ghost" type="button" @click="removeFavorite(favorite.id)">Remove</button>
+    <section class="card border-0 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+          <h2 class="h4 mb-0">Favorites</h2>
+          <span class="badge text-bg-secondary" v-if="favorites.length">{{ favorites.length }}</span>
+        </div>
+        <div class="row g-3" v-if="favorites.length">
+          <div class="col-12 col-md-6 col-lg-4" v-for="favorite in favorites" :key="favorite.id">
+            <article class="card h-100 border-0 shadow-sm">
+              <div class="card-body d-flex flex-column gap-2">
+                <h3 class="h5 mb-0">{{ favorite.label }}</h3>
+                <p class="text-secondary small mb-0">{{ formatCoords(favorite.latitude, favorite.longitude) }}</p>
+                <p class="text-secondary small mb-0">Saved {{ formatDate(favorite.createdAt) }}</p>
+                <div class="d-flex flex-wrap gap-2 mt-2">
+                  <button class="btn btn-primary btn-sm" type="button" @click="loadFavorite(favorite)">
+                    Load
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" type="button" @click="removeFavorite(favorite.id)">
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </article>
           </div>
-        </article>
+        </div>
+        <p v-else class="text-secondary mb-0">No favorites yet. Save one from a search.</p>
       </div>
-      <p v-else class="empty">No favorites yet. Save one from a search.</p>
     </section>
   </div>
 </template>
