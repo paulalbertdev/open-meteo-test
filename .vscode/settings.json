@@ -1,3 +1,8 @@
 {
-    "phpstan.projectFile": "backend/phpstan.neon"
+    "phpstan.projectFile": "backend/phpstan.neon",
+    "intelephense.environment.includePaths": [
+        "backend/src",
+        "backend/vendor"
+    ],
+    "intelephense.environment.documentRoot": "backend/public"
 }
