@@ -35,6 +35,11 @@ const longitudeValue = computed({
 const handleSubmit = () => {
     emit('submit')
 }
+
+const clearCoordinates = () => {
+    longitudeValue.value = ''
+    latitudeValue.value = ''
+}
 </script>
 
 <template>
@@ -47,7 +52,8 @@ const handleSubmit = () => {
             <form class="row g-3" @submit.prevent="handleSubmit">
                 <div class="col-12">
                     <label class="form-label">City</label>
-                    <input class="form-control" v-model="cityValue" placeholder="Paris, Lyon, Marseille" />
+                    <input class="form-control" @change="clearCoordinates" v-model="cityValue"
+                        placeholder="Paris, Lyon, Marseille" />
                 </div>
                 <div class="col-12">
                     <span class="divider text-uppercase">or</span>

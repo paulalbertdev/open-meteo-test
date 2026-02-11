@@ -64,10 +64,13 @@ const handleSearch = async () => {
   isLoading.value = true
 
   try {
-    if (trimmedCity) {
-      weather.value = await fetchWeatherByCity(trimmedCity)
-    } else if (latValue !== null && lonValue !== null) {
+    if (latValue !== null && lonValue !== null) {
       weather.value = await fetchWeatherByCoords(latValue, lonValue)
+      if (trimmedCity) {
+        weather.value.location.label = trimmedCity
+      }
+    } else if (trimmedCity) {
+      weather.value = await fetchWeatherByCity(trimmedCity)
     }
 
     statusMessage.value = 'Weather loaded.'
@@ -113,7 +116,7 @@ const removeFavorite = async (id: number) => {
 }
 
 const loadFavorite = async (favorite: Favorite) => {
-  city.value = ''
+  city.value = favorite.label
   latitude.value = favorite.latitude.toString()
   longitude.value = favorite.longitude.toString()
   await handleSearch()
@@ -185,7 +188,7 @@ onMounted(() => {
                 <p class="small mb-0">Wind {{ weather.current?.wind_speed_10m ?? '-' }} km/h</p>
                 <p class="small mb-0">Timezone {{ weather.timezone ?? '-' }}</p>
                 <div class="mt-2">
-                  <button class="btn btn-outline-secondary" type="button" @click="saveCurrent">
+                  <button class="btn btn-primary" type="button" @click="saveCurrent">
                     <span class="star-label">
                       <svg class="star-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                         <path
