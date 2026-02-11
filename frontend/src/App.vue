@@ -9,6 +9,7 @@ import {
   listFavorites,
   saveFavorite,
 } from './lib/api'
+import { formatCoords, formatDate, parseNumber } from './lib/formatters'
 import type { Favorite, WeatherResponse } from './types'
 
 const city = ref('')
@@ -121,27 +122,6 @@ const loadFavorite = async (favorite: Favorite) => {
   longitude.value = favorite.longitude.toString()
   await handleSearch()
   window.scrollTo({ top: 0, behavior: 'smooth' })
-}
-
-const parseNumber = (value: string): number | null => {
-  if (!value) {
-    return null
-  }
-
-  const parsed = Number.parseFloat(value)
-  return Number.isFinite(parsed) ? parsed : null
-}
-
-const formatCoords = (lat: number, lon: number): string => {
-  return `${lat.toFixed(3)}, ${lon.toFixed(3)}`
-}
-
-const formatDate = (value: string): string => {
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) {
-    return value
-  }
-  return date.toLocaleString('fr-FR')
 }
 
 onMounted(() => {
